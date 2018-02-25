@@ -1,0 +1,52 @@
+
+public class main {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		double min = -1;
+		double max = 1;
+		double step = 0.2;
+		int index;
+		
+		double []valuesX = new double[101];
+		double []valuesY = new double[101];
+		int a = 1, b = 0, c = 0;
+	
+		double val = min;
+		for (index = 0; val <= max; val = Math.round((val+step)*100) / 100.0, index++) {
+			valuesX[index] = val;
+			valuesY[index] = Math.round(functionValue(a, b, c, val) * 100) / 100.0;
+		}
+		int noOfValues = index;
+		
+		
+		for (index = 0; index < noOfValues; index++ ) {
+			System.out.println(valuesY[index]+ " |");
+		}
+		
+		for (index = 0; index < 100; index++ ) {
+			System.out.print("-");
+		}
+		System.out.println();
+		for (index = 0; index < noOfValues; index++ ) {
+			System.out.print(valuesX[index] + " ");
+		}
+		System.out.println();
+		
+		System.out.println();
+		//DrawLines(min, max, step);
+		
+	}
+	
+	
+	public static double functionValue(int a, int b, int c, double x) {
+		return (a*x*x + b*x + c) * 100 / 100;
+	}
+	public static void DrawLines(int min, int max, int step) {
+		
+		
+		
+	}
+
+}

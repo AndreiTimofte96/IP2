@@ -1,0 +1,141 @@
+import java.text.DecimalFormat;
+public class main {
+	
+	static double val;
+	static double []valuesX = new double[101];
+	static double []valuesY = new double[101];
+	static double []newValuesY = new double[101];
+	static String [][]graph = new String[101][101];
+	static int a = 1, b = 3, c = 1;
+	static double min = -3;
+	static double max = 1;
+	static double step = 0.2;
+	static int index, space, kVal, noOfValues;
+	static DecimalFormat df = new DecimalFormat("0.00"); // Set your desired format here.
+	static boolean[] use = new boolean[101];
+	static boolean isMinus = false;
+	
+	public static void main(String[] args) {
+		
+		
+		findYValues();
+		validateYValues();
+		sortYValues();
+//		for (int i = 0; i < kVal; i++) {
+//			System.out.print(newValuesY[i] + " ");
+//		}System.out.println();
+//		
+		createMatrix();
+		drawAll();
+		
+		System.out.println();
+	}
+	
+	public static void createMatrix() {
+		
+		double val;
+		int i, j;
+		
+		for (i = 0; i < noOfValues; i++) {
+			for (j = 0; j < kVal; j++) {
+				graph[i][j]=" ";
+			}
+		}
+		
+		
+		for (i = 0; i < noOfValues; i++) {
+			val = functionValue(valuesX[i]);
+			for (j = 0; j < kVal; j++) {
+				if (newValuesY[j] == val) {
+					break;
+				}
+			}
+			graph[i][j] = "*";
+		}
+	}
+	
+	public static void sortYValues() {
+		
+		boolean ok = true;
+		double aux;
+		while (ok) {
+			ok = false;
+			for (int i = 0; i < kVal -1 ; i++) {
+				if (newValuesY[i] < newValuesY[i+1]) {
+					ok = true;
+					aux = newValuesY[i];
+					newValuesY[i] = newValuesY[i+1];
+					newValuesY[i+1] = aux;
+				}
+			}
+		}
+	}
+	
+	public static void findYValues() {
+		
+		val = min;
+		for (index = 0; val <= max; val = Math.round((val+step)*100) / 100.0, index++) {
+			
+			valuesX[index] = val;
+			valuesY[index] = Math.round(functionValue(val) * 100) / 100.0;
+			//System.out.print(valuesY[index] + " "); 
+		}
+		noOfValues = index; 
+		System.out.println();	
+	}
+	
+	public static void validateYValues() {
+		int noOfValues = index;
+		for (int i = 0; i < noOfValues; i++) {
+			for (int j = i+1; j < noOfValues; j++) {
+				if (valuesY[i] == valuesY[j]) {
+					use[j] = true;
+					break; 
+				}
+			}
+		}
+		
+		for (int i = 0; i < noOfValues; i++) {
+			if (use[i] == false) {
+				newValuesY[kVal++] = valuesY[i];
+				//System.out.print(valuesY[i] + " ");
+			}
+		}
+		System.out.println();
+	}
+	
+	
+	public static void drawAll() {
+		
+		int i, j;
+		for (i = 0; i < noOfValues; i++) {
+			for (j = 0; j < kVal; j++) {
+				System.out.print(graph[i][j]);
+			}
+			System.out.println();
+		}
+		
+		 
+		
+		// X-VAL
+		System.out.print("       ");
+		for (index = 0; index < 6*(max-min)/step; index++ ) {
+			System.out.print("-");
+		}
+		System.out.println();
+		System.out.print("        ");
+		for (index = 0; index < noOfValues; index++ ) {
+			System.out.print(valuesX[index] + "  ");
+		}
+		///////////
+	}
+	
+	public static double functionValue(double x) {
+		return Math.round((a*x*x + b*x + c)*100) / 100.0;
+	}
+	
+	
+	
+
+}
+
